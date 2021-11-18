@@ -15,7 +15,7 @@ venv/
 *~
 __pycache__
 
-# QML
-*.qmlc
+# pybind11
+*.so
 
-build/
+build
