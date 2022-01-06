@@ -13,3 +13,5 @@ $ ./cmake-build.sh
 $ cd build
 $ ./example
 ```
+
+Then you would see `image.jpg`.

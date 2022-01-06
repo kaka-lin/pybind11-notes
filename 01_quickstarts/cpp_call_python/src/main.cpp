@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <pybind11/embed.h> // everything needed for embedding
+#include <pybind11/numpy.h>
 
 namespace py = pybind11;
 using namespace py::literals;
@@ -34,4 +35,15 @@ int main() {
     py::object result2 = calc.attr("add")(1, 2);
     int n = result2.cast<int>();
     cout << "the resoult of add(1, 2) is: " << n << endl;
+
+    py::object scipy_misc = py::module::import("scipy.misc");
+    py::object plt = py::module::import("matplotlib.pyplot");
+
+    py::array_t<uint8_t> img = scipy_misc.attr("face")().cast<py::array_t<uint8_t> >();
+    std::cout << "shape: " << img.shape()[0] << " " << img.shape()[1] << " " << img.shape()[2] << std::endl;
+    std::cout << "ndim: " << img.ndim() << std::endl;
+
+    py::object img_py = py::cast<py::object>(img);
+    std::cout << "==> Saved to: image.jpg" << std::endl;
+    plt.attr("imsave")("../image.jpg", img_py);
 }
